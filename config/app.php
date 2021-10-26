@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\BladeComponentServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
         /*
          * Application Service Providers...
          */

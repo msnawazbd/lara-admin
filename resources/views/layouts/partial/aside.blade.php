@@ -54,6 +54,18 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                           class="nav-link">
+                            <i class="nav-icon fas fa-lock"></i>
+                            <p>
+                                Logout
+                            </p>
+                        </a>
+                    </form>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
