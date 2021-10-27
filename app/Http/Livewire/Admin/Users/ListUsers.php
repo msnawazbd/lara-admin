@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Users;
 use App\Http\Livewire\Admin\AdminComponent;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Livewire\WithFileUploads;
 
 class ListUsers extends AdminComponent
 {
@@ -13,6 +14,9 @@ class ListUsers extends AdminComponent
     public $edit_mode = false;
     public $user_id;
     public $search_keywords = null;
+    public $photo;
+
+    use WithFileUploads;
 
     protected $listeners = [
         'confirm_destroy' => 'confirm_destroy'
@@ -36,10 +40,17 @@ class ListUsers extends AdminComponent
         /*$validate_data['password'] = bcrypt($validate_data['password']);
         $user = User::create($validate_data);*/
 
+        if ($this->photo) {
+            $validate_data['avatar'] = $this->photo->store('/', 'avatars');
+        } else {
+            $validate_data['avatar'] = '';
+        }
+
         $user = User::create([
             'name' => $this->state['name'],
             'email' => $this->state['email'],
-            'password' => bcrypt($this->state['password'])
+            'password' => bcrypt($this->state['password']),
+            'avatar' => $validate_data['avatar']
         ]);
 
         if ($user->id) {

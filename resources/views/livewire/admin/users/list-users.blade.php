@@ -29,14 +29,7 @@
                                 <button class="btn btn-primary btn-sm" wire:click="create"><i class="fas fa-plus"></i>
                                     &nbsp; Add User
                                 </button>
-                                <div class="d-flex justify-content-center align-items-center border bg-white pr-2 input-group-sm">
-                                    <input wire:model="search_keywords" type="text" class="form-control border-0" placeholder="Search">
-                                    <div wire:loading.delay wire:target="search_keywords">
-                                        <div class="la-ball-clip-rotate la-dark la-sm">
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <x-search-input wire:model="search_keywords"/>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -56,7 +49,10 @@
                                 @foreach($users as $key => $user)
                                     <tr>
                                         <td>{{ $users->firstItem() + $key }}</td>
-                                        <td>{{ $user->name }}</td>
+                                        <td>
+                                            <img src="{{ $user->avatar_url  }}" class="img img-circle mr-1" style="width: 50px" alt="">
+                                            {{ $user->name }}
+                                        </td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at->toFormattedDate() }}</td>
                                         <td>{{ $user->updated_at->toFormattedDate() }}</td>
@@ -143,6 +139,21 @@
                             <input type="password" wire:model.defer="state.password_confirmation" class="form-control"
                                    id="passwordConfirmation" placeholder="Confirm Password">
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Profile Photo</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input wire:model="photo" type="file" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">
+                                        @if($photo)
+                                            {{ $photo->getClientOriginalName() }}
+                                        @else
+                                            Choose file
+                                        @endif
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
@@ -162,158 +173,7 @@
         </div>
     </div>
     <!-- /. form modal -->
+
+    <!-- confirmation-alert components -->
+    <x-confirmation-alert/>
 </div>
-
-@push('styles')
-    <style>
-        /*!
-     * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
-     * Copyright 2015 Daniel Cardoso <@DanielCardoso>
-     * Licensed under MIT
-     */
-        .la-ball-clip-rotate,
-        .la-ball-clip-rotate > div {
-            position: relative;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        .la-ball-clip-rotate {
-            display: block;
-            font-size: 0;
-            color: #fff;
-        }
-
-        .la-ball-clip-rotate.la-dark {
-            color: #333;
-        }
-
-        .la-ball-clip-rotate > div {
-            display: inline-block;
-            float: none;
-            background-color: currentColor;
-            border: 0 solid currentColor;
-        }
-
-        .la-ball-clip-rotate {
-            width: 32px;
-            height: 32px;
-        }
-
-        .la-ball-clip-rotate > div {
-            width: 32px;
-            height: 32px;
-            background: transparent;
-            border-width: 2px;
-            border-bottom-color: transparent;
-            border-radius: 100%;
-            -webkit-animation: ball-clip-rotate .75s linear infinite;
-            -moz-animation: ball-clip-rotate .75s linear infinite;
-            -o-animation: ball-clip-rotate .75s linear infinite;
-            animation: ball-clip-rotate .75s linear infinite;
-        }
-
-        .la-ball-clip-rotate.la-sm {
-            width: 16px;
-            height: 16px;
-        }
-
-        .la-ball-clip-rotate.la-sm > div {
-            width: 16px;
-            height: 16px;
-            border-width: 1px;
-        }
-
-        .la-ball-clip-rotate.la-2x {
-            width: 64px;
-            height: 64px;
-        }
-
-        .la-ball-clip-rotate.la-2x > div {
-            width: 64px;
-            height: 64px;
-            border-width: 4px;
-        }
-
-        .la-ball-clip-rotate.la-3x {
-            width: 96px;
-            height: 96px;
-        }
-
-        .la-ball-clip-rotate.la-3x > div {
-            width: 96px;
-            height: 96px;
-            border-width: 6px;
-        }
-
-        /*
-         * Animation
-         */
-        @-webkit-keyframes ball-clip-rotate {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            50% {
-                -webkit-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes ball-clip-rotate {
-            0% {
-                -moz-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            50% {
-                -moz-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
-            100% {
-                -moz-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-o-keyframes ball-clip-rotate {
-            0% {
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            50% {
-                -o-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
-            100% {
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes ball-clip-rotate {
-            0% {
-                -webkit-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            50% {
-                -webkit-transform: rotate(180deg);
-                -moz-transform: rotate(180deg);
-                -o-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-@endpush
