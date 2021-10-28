@@ -53,6 +53,8 @@
 <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 <!-- Sweet Alert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- AlpineJS -->
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 <!-- Custom JS -->
 <script>
     $(document).ready(function () {
@@ -71,6 +73,10 @@
 <script>
     window.addEventListener('show-form', event => {
         $('#show-form').modal('show')
+    })
+
+    window.addEventListener('updated', event => {
+        toastr.success(event.detail.message, 'Success!')
     })
 </script>
 

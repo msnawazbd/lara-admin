@@ -38,8 +38,21 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
+                                    <th>
+                                        Name
+                                        <span wire:click="sortBy('name')" class="float-right text-sm" style="cursor: pointer;">
+                                            <i class="fa fa-arrow-up {{ $sortColumnName === 'name' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                            <i class="fa fa-arrow-down {{ $sortColumnName === 'name' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        Email
+                                        <span wire:click="sortBy('email')" class="float-right text-sm" style="cursor: pointer;">
+                                            <i class="fa fa-arrow-up {{ $sortColumnName === 'email' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                            <i class="fa fa-arrow-down {{ $sortColumnName === 'email' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                        </span>
+                                    </th>
+                                    <th>Role</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th class="text-right">Action</th>
@@ -50,10 +63,19 @@
                                     <tr>
                                         <td>{{ $users->firstItem() + $key }}</td>
                                         <td>
-                                            <img src="{{ $user->avatar_url  }}" class="img img-circle mr-1" style="width: 50px" alt="">
+                                            <img src="{{ $user->avatar_url  }}" class="img img-circle mr-1"
+                                                 style="width: 50px" alt="">
                                             {{ $user->name }}
                                         </td>
                                         <td>{{ $user->email }}</td>
+                                        <td>
+                                            <div>
+                                                <select class="form-control" wire:change="change_role({{ $user }}, $event.target.value)">
+                                                    <option value="admin" {{ ($user->role === 'admin') ? 'selected' : '' }}>Admin</option>
+                                                    <option value="user" {{ ($user->role === 'user') ? 'selected' : '' }}>User</option>
+                                                </select>
+                                            </div>
+                                        </td>
                                         <td>{{ $user->created_at->toFormattedDate() }}</td>
                                         <td>{{ $user->updated_at->toFormattedDate() }}</td>
                                         <td class="text-right">
@@ -140,11 +162,24 @@
                                    id="passwordConfirmation" placeholder="Confirm Password">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">Profile Photo</label>
-                            <div class="input-group">
+                            <label for="customFile">Profile Photo</label>
+                            <div class="form-group">
                                 <div class="custom-file">
-                                    <input wire:model="photo" type="file" class="custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">
+                                    <div x-data="{ isUploading : false, progress: 5 }"
+                                         x-on:livewire-upload-start="isUploading = true"
+                                         x-on:livewire-upload-finish="isUploading = false; progress = 5"
+                                         x-on:livewire-upload-error="isUploading = false"
+                                         x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                        <input wire:model="photo" type="file" class="custom-file-input" id="customFile">
+                                        <div x-show.transition="isUploading" class="progress progress-sm mt-2 rounded">
+                                            <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                 x-bind:style="`width: ${progress}%`">
+                                                <span class="sr-only">40% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="custom-file-label" for="customFile">
                                         @if($photo)
                                             {{ $photo->getClientOriginalName() }}
                                         @else
@@ -153,6 +188,11 @@
                                     </label>
                                 </div>
                             </div>
+                            @if($photo)
+                                <img src="{{ $photo->temporaryUrl() }}" class="img d-block mt-2 w-100" alt="">
+                            @else
+                                <img src="{{ $state['avatar_url'] ?? '' }}" class="img d-block mt-2 w-100" alt="">
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
