@@ -16,10 +16,12 @@ class ListUsers extends AdminComponent
     public $user;
     public $edit_mode = false;
     public $user_id;
-    public $search_keywords = null;
+    public $searchTerm = null;
     public $photo;
     public $sortColumnName = 'created_at';
     public $sortDirection = 'desc';
+
+    protected $queryString = ['searchTerm' => ['except' => '']];
 
     use WithFileUploads;
 
@@ -145,12 +147,17 @@ class ListUsers extends AdminComponent
         return $this->sortDirection === 'asc' ? 'desc' : 'asc';
     }
 
+    public function updatedSearchTerm()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $users = User::where('id', '!=', Auth::user()->id)
-            ->where(function ($query){
-                $query->where('name', 'like', '%' . $this->search_keywords . '%')
-                    ->orWhere('email', 'like', '%' . $this->search_keywords . '%');
+            ->where(function ($query) {
+                $query->where('name', 'like', '%' . $this->searchTerm . '%')
+                    ->orWhere('email', 'like', '%' . $this->searchTerm . '%');
             })
             ->orderBy($this->sortColumnName, $this->sortDirection)
             ->paginate(5);

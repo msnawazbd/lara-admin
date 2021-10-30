@@ -53,66 +53,78 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header p-2">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="#change-password" data-toggle="tab">Change
-                                        Password</a></li>
+                            <ul class="nav nav-pills" wire:ignore>
+                                <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab"><i class="fas fa-user"></i> &nbsp; Settings</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#change-password" data-toggle="tab"><i class="fas fa-key"></i> &nbsp; Change Password</a></li>
                             </ul>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="active tab-pane" id="settings">
-                                    <form class="form-horizontal">
+                                <div class="active tab-pane" id="settings" wire:ignore.self>
+                                    <form wire:submit.prevent="updateProfile" class="form-horizontal">
                                         <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                                            <label for="name" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputName"
-                                                       placeholder="Name">
+                                                <input type="text" wire:model.defer="state.name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Name">
+                                                @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                            <label for="email" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail"
-                                                       placeholder="Email">
+                                                <input type="email" wire:model.defer="state.email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Email">
+                                                @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">Submit</button>
+                                                <button type="submit" class="btn btn-primary"> <i class="fas fa-save"></i> Save Change</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <!-- /.tab-pane -->
-                                <div class="tab-pane" id="change-password">
-                                    <form class="form-horizontal">
+                                <div class="tab-pane" id="change-password" wire:ignore.self>
+                                    <form wire:submit.prevent="changePassword" class="form-horizontal">
                                         <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
+                                            <label for="current_password" class="col-sm-2 col-form-label">Current Password</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputName"
-                                                       placeholder="Name">
+                                                <input type="password" wire:model.defer="state.current_password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" placeholder="xxxxxxxx">
+                                                @error('current_password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
+                                            <label for="password" class="col-sm-2 col-form-label">New Password</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail"
-                                                       placeholder="Email">
+                                                <input type="password" wire:model.defer="state.password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="xxxxxxxx">
+                                                @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">Confirm
-                                                Password</label>
+                                            <label for="password_confirmation" class="col-sm-2 col-form-label">Confirm Password</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName2"
-                                                       placeholder="Name">
+                                                <input type="password" wire:model.defer="state.password_confirmation" class="form-control" id="password_confirmation" placeholder="xxxxxxxx">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">Submit</button>
+                                                <button type="submit" class="btn btn-primary"> <i class="fas fa-save"></i> Save Change</button>
                                             </div>
                                         </div>
                                     </form>
@@ -140,4 +152,14 @@
             cursor: pointer;
         }
     </style>
+@endpush
+
+@push('js')
+    <script>
+        $(document).ready(function (){
+           Livewire.on('nameChanged', (changedName) => {
+               $('[x-ref="username"]').text(changedName)
+           })
+        });
+    </script>
 @endpush

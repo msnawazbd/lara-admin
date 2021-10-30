@@ -29,7 +29,7 @@
                                 <button class="btn btn-primary btn-sm" wire:click="create"><i class="fas fa-plus"></i>
                                     &nbsp; Add User
                                 </button>
-                                <x-search-input wire:model="search_keywords"/>
+                                <x-search-input wire:model="searchTerm"/>
                             </div>
                         </div>
                         <!-- /.card-header -->
