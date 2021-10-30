@@ -4,7 +4,10 @@ namespace App\Http\Livewire\Admin\Users;
 
 use App\Http\Livewire\Admin\AdminComponent;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
 
 class ListUsers extends AdminComponent
@@ -15,6 +18,8 @@ class ListUsers extends AdminComponent
     public $user_id;
     public $search_keywords = null;
     public $photo;
+    public $sortColumnName = 'created_at';
+    public $sortDirection = 'desc';
 
     use WithFileUploads;
 
@@ -61,6 +66,7 @@ class ListUsers extends AdminComponent
 
     public function edit(User $user)
     {
+        $this->reset();
         $this->edit_mode = true;
         $this->user = $user;
         $this->state = $user->toArray();
@@ -77,6 +83,13 @@ class ListUsers extends AdminComponent
 
         if (!empty($this->state['password'])) {
             $validate_data['password'] = bcrypt($this->state['password']);
+        }
+
+        if ($this->photo) {
+            Storage::disk('avatars')->delete($this->user->avatar);
+            $validate_data['avatar'] = $this->photo->store('/', 'avatars');
+        } else {
+            $validate_data['avatar'] = '';
         }
 
         $this->user->update($validate_data);
@@ -100,11 +113,47 @@ class ListUsers extends AdminComponent
         $this->dispatchBrowserEvent('deleted', ['message' => 'User deleted successfully.']);
     }
 
+    public function change_role(User $user, $role)
+    {
+        Validator::make(['role' => $role], [
+            // 'role' => 'required|in:admin,user'
+            'role' => [
+                'required',
+                Rule::in(User::ROLE_ADMIN, User::ROLE_USER)
+            ]
+        ])->validate();
+
+        $user->update(['role' => $role]);
+        $this->dispatchBrowserEvent('updated', ['message' => "User role change to {$role} successfully!"]);
+
+        return redirect()->back();
+    }
+
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumnName === $columnName) {
+            $this->sortDirection = $this->swapSortDirection();
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortColumnName = $columnName;
+    }
+
+    public function swapSortDirection()
+    {
+        return $this->sortDirection === 'asc' ? 'desc' : 'asc';
+    }
+
     public function render()
     {
-        $users = User::where('name', 'like', '%' . $this->search_keywords . '%')
-            ->orWhere('email', 'like', '%' . $this->search_keywords . '%')
-            ->latest()->paginate(2);
+        $users = User::where('id', '!=', Auth::user()->id)
+            ->where(function ($query){
+                $query->where('name', 'like', '%' . $this->search_keywords . '%')
+                    ->orWhere('email', 'like', '%' . $this->search_keywords . '%');
+            })
+            ->orderBy($this->sortColumnName, $this->sortDirection)
+            ->paginate(5);
 
         return view('livewire.admin.users.list-users', [
             'users' => $users

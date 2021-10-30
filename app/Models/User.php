@@ -48,6 +48,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'avatar_url'
+    ];
+
     public function isAdmin()
     {
         if($this->role !== self::ROLE_ADMIN) {
@@ -58,7 +62,7 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute()
     {
-        if ($this->avatar) {
+        if ($this->avatar && Storage::disk('avatars')->exists($this->avatar)) {
             return Storage::disk('avatars')->url($this->avatar);
         }
 

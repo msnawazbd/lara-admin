@@ -3,7 +3,7 @@
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
         <img src="{{ asset('backend/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">{{ setting('site_name') }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -11,11 +11,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                <img src="{{ auth()->user()['avatar_url'] ?? '' }}" id="profileImage" class="img-circle elevation-2"
                      alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="{{ route('admin.profile') }}" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -46,11 +46,27 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
+                <li class="nav-item">
                     <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Users
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Profile
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.settings') }}" class="nav-link {{ request()->is('admin/settings') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Setting
                         </p>
                     </a>
                 </li>

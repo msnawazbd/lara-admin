@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin | Dashboard</title>
+    <title>{{ setting('site_name') }} | {{ setting('site_title') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -18,7 +18,7 @@
     @stack('styles')
     @livewireStyles
 </head>
-<body class="hold-transition sidebar-mini text-sm">
+<body class="hold-transition sidebar-mini text-sm {{ setting('sidebar_collapse') ? 'sidebar-collapse' : '' }}">
 
 <div class="wrapper">
 
@@ -53,6 +53,8 @@
 <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 <!-- Sweet Alert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- AlpineJS -->
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 <!-- Custom JS -->
 <script>
     $(document).ready(function () {
@@ -71,6 +73,10 @@
 <script>
     window.addEventListener('show-form', event => {
         $('#show-form').modal('show')
+    })
+
+    window.addEventListener('updated', event => {
+        toastr.success(event.detail.message, 'Success!')
     })
 </script>
 
