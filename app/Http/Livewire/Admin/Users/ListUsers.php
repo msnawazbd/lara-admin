@@ -24,8 +24,8 @@ class ListUsers extends AdminComponent
 
     public function create()
     {
+        $this->reset();
         $this->edit_mode = false;
-        $this->state = [];
         $this->dispatchBrowserEvent('show-form');
     }
 
