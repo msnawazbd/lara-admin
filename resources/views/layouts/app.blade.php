@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin | Dashboard</title>
+    <title>{{ setting('site_name') }} | {{ setting('site_title') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -18,7 +18,7 @@
     @stack('styles')
     @livewireStyles
 </head>
-<body class="hold-transition sidebar-mini text-sm">
+<body class="hold-transition sidebar-mini text-sm {{ setting('sidebar_collapse') ? 'sidebar-collapse' : '' }}">
 
 <div class="wrapper">
 
