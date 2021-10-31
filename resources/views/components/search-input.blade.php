@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center align-items-center border bg-white pr-2 input-group-sm">
     <input {{ $attributes }} type="text" class="form-control border-0" placeholder="Search">
-    <div wire:loading.delay wire:target="search_keywords">
+    <div wire:loading.delay wire:target="searchTerm">
         <div class="la-ball-clip-rotate la-dark la-sm">
             <div></div>
         </div>

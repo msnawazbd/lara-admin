@@ -27,11 +27,12 @@
                         <div class="card-body box-profile">
                             <div class="text-center" x-data="{ imagePreview: '{{ auth()->user()->avatar_url }}' }">
                                 <input wire:model="image" class="d-none" type="file" x-ref="image" x-on:change="
-                                    const reader = new FileReader();
+                                    reader = new FileReader();
                                     reader.onload = (event) => {
                                         {{--console.log(event.target.result);--}}
                                         imagePreview = event.target.result;
-                                        document.getElementById('profileImage').src = `${imagePreview}`;
+                                        document.getElementById('profileNavImage').src = `${imagePreview}`;
+                                        document.getElementById('profileSideImage').src = `${imagePreview}`;
                                     }
                                     reader.readAsDataURL($refs.image.files[0]);
                                     ">
@@ -51,16 +52,16 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card" x-data="{ currentTab: $persist('profile') }">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills" wire:ignore>
-                                <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab"><i class="fas fa-user"></i> &nbsp; Settings</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#change-password" data-toggle="tab"><i class="fas fa-key"></i> &nbsp; Change Password</a></li>
+                                <li @click.prevent="currentTab = 'profile'" class="nav-item"><a class="nav-link" :class="currentTab === 'profile' ? 'active' : ''" href="#profile" data-toggle="tab"><i class="fas fa-user"></i> &nbsp; Settings</a></li>
+                                <li @click.prevent="currentTab = 'changePassword'" class="nav-item"><a class="nav-link" :class="currentTab === 'changePassword' ? 'active' : ''" href="#changePassword" data-toggle="tab"><i class="fas fa-key"></i> &nbsp; Change Password</a></li>
                             </ul>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="active tab-pane" id="settings" wire:ignore.self>
+                                <div class="tab-pane" :class="currentTab === 'profile' ? 'active' : ''" id="profile" wire:ignore.self>
                                     <form wire:submit.prevent="updateProfile" class="form-horizontal">
                                         <div class="form-group row">
                                             <label for="name" class="col-sm-2 col-form-label">Name</label>
@@ -92,7 +93,7 @@
                                     </form>
                                 </div>
                                 <!-- /.tab-pane -->
-                                <div class="tab-pane" id="change-password" wire:ignore.self>
+                                <div class="tab-pane" :class="currentTab === 'changePassword' ? 'active' : ''" id="changePassword" wire:ignore.self>
                                     <form wire:submit.prevent="changePassword" class="form-horizontal">
                                         <div class="form-group row">
                                             <label for="current_password" class="col-sm-2 col-form-label">Current Password</label>
@@ -154,12 +155,26 @@
     </style>
 @endpush
 
+@push('apline-plugins')
+    <!-- Alpine Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+@endpush
+
 @push('js')
     <script>
         $(document).ready(function (){
            Livewire.on('nameChanged', (changedName) => {
                $('[x-ref="username"]').text(changedName)
            })
+        });
+    </script>
+
+    <script>
+        $('[x-ref="profileLink"]').on('click', function(){
+            localStorage.setItem('_x_currentTab', '"profile"')
+        });
+        $('[x-ref="changePasswordLink"]').on('click', function(){
+            localStorage.setItem('_x_currentTab', '"changePassword"')
         });
     </script>
 @endpush

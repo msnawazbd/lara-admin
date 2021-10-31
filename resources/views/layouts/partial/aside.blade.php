@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ auth()->user()['avatar_url'] ?? '' }}" id="profileImage" class="img-circle elevation-2"
+                <img src="{{ auth()->user()['avatar_url'] ?? '' }}" id="profileSideImage" class="img-circle elevation-2"
                      alt="{{ auth()->user()->name }}">
             </div>
             <div class="info">
@@ -55,7 +55,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                    <a href="{{ route('admin.appointments') }}" class="nav-link {{ request()->is('admin/appointments', 'admin/appointments/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Appointments
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.profile') }}" x-ref="profileLink" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Profile
