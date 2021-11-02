@@ -32,7 +32,7 @@
                                             class="fas fa-plus"></i>
                                         &nbsp; Add Appointment
                                     </a>
-                                    {{--@if($selected_rows)
+                                    @if($selected_rows)
                                         <div class="btn-group ml-2">
                                             <button type="button" class="btn btn-default">Action</button>
                                             <button type="button" class="btn btn-default dropdown-toggle dropdown-icon"
@@ -40,20 +40,21 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu" style="">
-                                                <a wire:click.prevent="deleteSelectedRows" class="dropdown-item"
+                                                <a wire:click.prevent="delete_selected_rows" class="dropdown-item"
                                                    href="#">Delete Selected</a>
-                                                <a wire:click.prevent="markAllAsScheduled" class="dropdown-item"
+                                                <a wire:click.prevent="mark_all_as_scheduled" class="dropdown-item"
                                                    href="#">Mark as Scheduled</a>
-                                                <a wire:click.prevent="markAllAsClosed" class="dropdown-item" href="#">Mark
+                                                <a wire:click.prevent="mark_all_as_closed" class="dropdown-item"
+                                                   href="#">Mark
                                                     as Closed</a>
                                             </div>
                                         </div>
                                         <span
                                             class="ml-2">Selected {{ count($selected_rows) }} {{ Str::plural('appointment', count($selected_rows)) }}</span>
-                                    @endif--}}
+                                    @endif
                                 </div>
                                 <div class="btn-group">
-                                    {{--<button wire:click="filter_by_status" type="button"
+                                    <button wire:click="filter_by_status" type="button"
                                             class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
                                         <span class="mr-1">All</span>
                                         <span class="badge badge-pill badge-info">{{ $total_appointment }}</span>
@@ -69,7 +70,7 @@
                                             class="btn {{ ($status === 'closed') ? 'btn-secondary' : 'btn-default' }}">
                                         <span class="mr-1">Closed</span>
                                         <span class="badge badge-pill badge-success">{{ $closed_appointment }}</span>
-                                    </button>--}}
+                                    </button>
                                 </div>
                             </div>
                         </div>

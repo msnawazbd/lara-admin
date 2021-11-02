@@ -25,6 +25,7 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
+                    <livewire:admin.dashboard.appointments-count />
                     <livewire:admin.dashboard.users-count />
                 </div>
             </div><!-- /.container-fluid -->
