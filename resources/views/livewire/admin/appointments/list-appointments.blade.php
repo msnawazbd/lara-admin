@@ -47,6 +47,8 @@
                                                 <a wire:click.prevent="mark_all_as_closed" class="dropdown-item"
                                                    href="#">Mark
                                                     as Closed</a>
+                                                <a wire:click.prevent="export" class="dropdown-item"
+                                                   href="#">Export</a>
                                             </div>
                                         </div>
                                         <span
@@ -79,6 +81,7 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>
                                         <div class="icheck-primary d-inline ml-2">
                                             <input wire:model="selectPageRows" type="checkbox" value="" name="todo2"
@@ -94,9 +97,10 @@
                                     <th class="text-right">Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody wire:sortable="updateAppointmentOrder">
                                 @foreach($appointments as $key => $appointment)
-                                    <tr>
+                                    <tr wire:sortable.item="{{ $appointment->id }}" wire:key="appointment-{{ $appointment->id }}">
+                                        <td wire:sortable.handle style="width: 10px; cursor: move"><i class="fa fa-arrows-alt text-muted"></i></td>
                                         <td>
                                             <div class="icheck-primary d-inline ml-2">
                                                 <input wire:model="selected_rows" type="checkbox"
@@ -146,3 +150,15 @@
 <!-- confirmation-alert components -->
 <x-confirmation-alert/>
 <!-- /. confirmation-alert components -->
+
+@push('styles')
+    <style>
+        .draggable-mirror {
+            background-color: #ffffff;
+            width: 950px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+@endpush

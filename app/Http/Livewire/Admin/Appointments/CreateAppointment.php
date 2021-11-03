@@ -15,6 +15,7 @@ class CreateAppointment extends Component
     {
         $validate_data = Validator::make($this->state, [
             'client_id' => 'required|numeric',
+            'members' => 'nullable',
             'date' => 'required|date',
             'time' => 'required',
             'status' => 'required',
@@ -33,6 +34,7 @@ class CreateAppointment extends Component
             'time' => $this->state['time'],
             'note' => $this->state['note'],
             'status' => $this->state['status'],
+            // 'members' => $this->state['members'],
         ]);
 
         $this->dispatchBrowserEvent('alert', ['message' => 'Appointment created successfully']);

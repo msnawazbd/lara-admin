@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Appointments;
 
+use App\Exports\AppointmentsExport;
 use App\Http\Livewire\Admin\AdminComponent;
 use App\Models\Appointment;
 
@@ -72,6 +73,20 @@ class ListAppointments extends AdminComponent
         $this->dispatchBrowserEvent('deleted', ['message' => 'Appointment deleted successfully.']);
     }
 
+    public function export()
+    {
+        return (new AppointmentsExport($this->selected_rows))->download('appointments.xlsx');
+    }
+
+    public function updateAppointmentOrder($items)
+    {
+        foreach ($items as $key => $item) {
+            Appointment::find($item['value'])->update(['order_position' => $item['order']]);
+        }
+
+        $this->dispatchBrowserEvent('updated', ['message' => 'Appointments marked as closed']);
+    }
+
     public function getAppointmentsProperty()
     {
         return Appointment::with([
@@ -80,7 +95,7 @@ class ListAppointments extends AdminComponent
             ->when($this->status, function ($query, $status) {
                 return $query->where('status', $status);
             })
-            ->latest()
+            ->orderBy('order_position', 'asc')
             ->paginate(5);
     }
 

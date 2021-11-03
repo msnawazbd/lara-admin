@@ -15,8 +15,7 @@
     <!-- Toastr  -->
     <link href="{{ asset('backend/plugins/toastr/toastr.min.css') }}" rel="stylesheet"/>
     <!-- Date Time Picker  -->
-    <link href="{{ asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"
-          rel="stylesheet"/>
+    <link href="{{ asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet"/>
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Custom CSS -->
@@ -95,6 +94,6 @@
 
 @stack('js')
 @livewireScripts
-
+<script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
 </body>
 </html>
