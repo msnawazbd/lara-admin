@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
     <!-- Toastr  -->
     <link href="{{ asset('backend/plugins/toastr/toastr.min.css') }}" rel="stylesheet"/>
-    <!-- Date Time Picker  -->
-    <link href="{{ asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet"/>
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Custom CSS -->
@@ -57,9 +55,6 @@
 <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 <!-- Sweet Alert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Date Time Picker  -->
-<script src="https://unpkg.com/moment"></script>
-<script src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- AlpineJS -->
 @stack('apline-plugins')]
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

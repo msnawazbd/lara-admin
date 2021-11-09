@@ -27,6 +27,8 @@ class UpdateAppointment extends Component
             'time' => 'required',
             'status' => 'nullable',
             'note' => 'required|string',
+            'members' => 'required',
+            'color' => 'required',
         ],[
             'client_id.required' => 'The client field is required.'
         ])

@@ -37,7 +37,7 @@
                         <form wire:submit.prevent="update">
                             <div class="card-body table-responsive">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="client_id">Client:</label>
                                             <select class="form-control @error('client_id') is-invalid @enderror" wire:model.defer="state.client_id" id="client_id">
@@ -51,6 +51,33 @@
                                                 {{ $message }}
                                             </div>
                                             @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div wire:ignore class="form-group">
+                                            <label>Select Team Members</label>
+                                            <x-inputs.select2 wire:model="state.members" id="members" placeholder="Select Members">
+                                                <option>One</option>
+                                                <option>Alaska</option>
+                                                <option>California</option>
+                                                <option>Delaware</option>
+                                                <option>Tennessee</option>
+                                                <option>Texas</option>
+                                                <option>Washington</option>
+                                            </x-inputs.select2>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Color Picker -->
+                                        <div class="form-group">
+                                            <label>Color picker with addon:</label>
+                                            <div class="input-group" id="colorPicker">
+                                                <input type="text" wire:model="state.color" name="color" class="form-control">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-square"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- /.input group -->
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -129,4 +156,5 @@
 </div>
 <!-- /.content -->
 </div>
+@include('livewire/admin/appointments/appointment-css')
 @include('livewire/admin/appointments/appointment-js')
