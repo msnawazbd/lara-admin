@@ -1,5 +1,18 @@
 window._ = require('lodash');
 
+
+/*
+* Added jQuery
+*/
+
+try {
+    window.$ = window.jQuery = require('jquery');
+    require('admin-lte');
+    require('admin-lte/plugins/bootstrap/js/bootstrap.bundle.js');
+    window.toastr = require('admin-lte/plugins/toastr/toastr.min.js');
+} catch (e) {}
+
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

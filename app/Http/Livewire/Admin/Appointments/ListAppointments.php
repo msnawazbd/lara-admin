@@ -99,6 +99,11 @@ class ListAppointments extends AdminComponent
             ->paginate(5);
     }
 
+    public function mount()
+    {
+        $this->getAppointmentsProperty();
+    }
+
     public function render()
     {
         $total_appointment = Appointment::count();

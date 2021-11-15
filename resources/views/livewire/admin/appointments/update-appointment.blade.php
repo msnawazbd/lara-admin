@@ -40,7 +40,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="client_id">Client:</label>
-                                            <select class="form-control @error('client_id') is-invalid @enderror" wire:model.defer="state.client_id" id="client_id">
+                                            <select class="form-control @error('client_id') is-invalid @enderror"
+                                                    wire:model.defer="state.client_id" id="client_id">
                                                 <option value="">Select Client</option>
                                                 @foreach($clients as $client)
                                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -56,7 +57,8 @@
                                     <div class="col-md-6">
                                         <div wire:ignore class="form-group">
                                             <label>Select Team Members</label>
-                                            <x-inputs.select2 wire:model="state.members" id="members" placeholder="Select Members">
+                                            <x-inputs.select2 wire:model="state.members" id="members"
+                                                              placeholder="Select Members">
                                                 <option>One</option>
                                                 <option>Alaska</option>
                                                 <option>California</option>
@@ -72,7 +74,8 @@
                                         <div class="form-group">
                                             <label>Color picker with addon:</label>
                                             <div class="input-group" id="colorPicker">
-                                                <input type="text" wire:model="state.color" name="color" class="form-control">
+                                                <input type="text" wire:model="state.color" name="color"
+                                                       class="form-control">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fas fa-square"></i></span>
                                                 </div>
@@ -87,7 +90,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                                 </div>
-                                                <x-timepicker wire:model.defer="state.time" id="appointment_time" :error="'time'" />
+                                                <x-timepicker wire:model.defer="state.time" id="appointment_time"
+                                                              :error="'time'"/>
                                                 @error('time')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -101,9 +105,11 @@
                                             <label for="appointmentDate">Appointment Date</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <x-datepicker wire:model.defer="state.date" id="appointment_date" :error="'date'" />
+                                                <x-datepicker wire:model.defer="state.date" id="appointment_date"
+                                                              :error="'date'"/>
                                                 @error('date')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -115,7 +121,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="status">Status:</label>
-                                            <select id="status" wire:model.defer="state.status" class="form-control @error('status') is-invalid @enderror">
+                                            <select id="status" wire:model.defer="state.status"
+                                                    class="form-control @error('status') is-invalid @enderror">
                                                 <option value="">Select Status</option>
                                                 <option value="SCHEDULED">Scheduled</option>
                                                 <option value="CLOSED">Closed</option>
@@ -131,7 +138,8 @@
                                 <div class="col-md-12">
                                     <div wire:ignore class="form-group">
                                         <label for="note">Note:</label>
-                                        <textarea id="note" data-note="@this" wire:model.defer="state.note" class="form-control @error('note') is-invalid @enderror">{!! $state['note'] !!}</textarea>
+                                        <textarea id="note" data-note="@this" wire:model.defer="state.note"
+                                                  class="form-control @error('note') is-invalid @enderror">{!! $state['note'] !!}</textarea>
                                         @error('note')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -140,21 +148,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <x-inputs.button id="update-profile" class="text-white">Save Change</x-inputs.button>
+                            </div>
+                        </form>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</button>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
-                    </div>
-                    </form>
                 </div>
+                <!-- /.col-md-12 -->
             </div>
-            <!-- /.col-md-12 -->
-        </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content -->
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
 </div>
 @include('livewire/admin/appointments/appointment-css')
 @include('livewire/admin/appointments/appointment-js')

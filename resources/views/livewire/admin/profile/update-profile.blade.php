@@ -37,7 +37,7 @@
                                     reader.readAsDataURL($refs.image.files[0]);
                                     ">
                                 <img x-on:click="$refs.image.click()" class="profile-user-img img-fluid img-circle"
-                                     x-bind:src="imagePreview ? imagePreview : '{{ asset('backend/dist/img/user4-128x128.jpg') }}'"
+                                     x-bind:src="imagePreview ? imagePreview : '{{ auth()->user()->avatar_url }}'"
                                      alt="User profile picture">
                             </div>
 
@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-primary"> <i class="fas fa-save"></i> Save Change</button>
+                                                <x-inputs.button id="update-profile" class="text-white">Save Change</x-inputs.button>
                                             </div>
                                         </div>
                                     </form>
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-primary"> <i class="fas fa-save"></i> Save Change</button>
+                                                <x-inputs.button id="change-password" class="text-white">Save Change</x-inputs.button>
                                             </div>
                                         </div>
                                     </form>
@@ -166,15 +166,6 @@
            Livewire.on('nameChanged', (changedName) => {
                $('[x-ref="username"]').text(changedName)
            })
-        });
-    </script>
-
-    <script>
-        $('[x-ref="profileLink"]').on('click', function(){
-            localStorage.setItem('_x_currentTab', '"profile"')
-        });
-        $('[x-ref="changePasswordLink"]').on('click', function(){
-            localStorage.setItem('_x_currentTab', '"changePassword"')
         });
     </script>
 @endpush

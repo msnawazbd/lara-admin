@@ -157,10 +157,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="button" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel
-                                </button>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Submit
-                                </button>
+                            <x-inputs.button id="create-appointment" class="text-white">Create appointment</x-inputs.button>
                             </div>
                         </form>
                     </div>

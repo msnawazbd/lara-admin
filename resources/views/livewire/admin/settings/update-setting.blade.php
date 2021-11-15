@@ -69,7 +69,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <x-inputs.button id="update-profile" class="text-white">Save Change</x-inputs.button>
                             </div>
                         </form>
                     </div>

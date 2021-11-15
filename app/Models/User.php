@@ -66,6 +66,7 @@ class User extends Authenticatable
             return Storage::disk('avatars')->url($this->avatar);
         }
 
-        return asset('noimage.png');
+        // return asset('noimage.png');
+        return 'https://ui-avatars.com/api/?name=' . $this->name;
     }
 }
