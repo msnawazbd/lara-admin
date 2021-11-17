@@ -56,24 +56,6 @@
                                     @endif
                                 </div>
                                 <div class="btn-group">
-                                    <button wire:click="getAppointmentsProperty" type="button"
-                                            class="btn btn-default">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243); display: block; shape-rendering: auto;" width="20px" height="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                            <g>
-                                                <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#000000" stroke-width="12"></path>
-                                                <path d="M49 3L49 27L61 15L49 3" fill="#000000"></path>
-                                                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
-                                            </g>
-                                        </svg>
-
-                                        {{--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="margin-right:-2px;display:block;background-repeat-y:initial;background-repeat-x:initial;background-color:rgb(241, 242, 243);animation-play-state:paused" >
-                                            <g transform="matrix(1,0,0,1,0,0)" style="transform:matrix(1, 0, 0, 1, 0, 0);animation-play-state:paused" >
-                                                <path d="M50 15A35 35 0 1 0 74.74873734152916 25.251262658470843" fill="none" stroke="#000000" stroke-width="12" style="animation-play-state:paused" ></path>
-                                                <path d="M49 3L49 27L61 15L49 3" fill="#000000" style="animation-play-state:paused" ></path>
-                                            </g>
-                                        </svg>--}}
-                                    </button>
-
                                     <button wire:click="filter_by_status" type="button"
                                             class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
                                         <span class="mr-1">All</span>
@@ -136,10 +118,9 @@
                                                 class="badge badge-{{ $appointment->status_badge }}">{{ $appointment->status }}</span>
                                         </td>
                                         <td class="text-right">
-                                            <button type="button" class="btn btn-info btn-sm"><i class="fas fa-eye"></i>
-                                            </button>
+                                            <button wire:click="changeStatus({{ $appointment->id }})" type="button" class="btn btn-{{ $appointment->status_badge }} btn-sm"><i class="fas fa-eye{{ $appointment->status == 'CLOSED' ? '-slash' : '' }}"></i></button>
                                             <a href="{{ route('admin.appointments.edit', $appointment) }}"
-                                               class="btn btn-primary btn-sm"><i
+                                               class="btn btn-info btn-sm"><i
                                                     class="fas fa-edit"></i></a>
                                             <button type="button" wire:click.prevent="destroy({{ $appointment->id }})"
                                                     class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>

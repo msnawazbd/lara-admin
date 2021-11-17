@@ -22,7 +22,7 @@ class Appointment extends Model
     {
         $badge = [
             'SCHEDULED' => 'primary',
-            'CLOSED' => 'success',
+            'CLOSED' => 'warning',
         ];
 
         return $badge[$this->status];

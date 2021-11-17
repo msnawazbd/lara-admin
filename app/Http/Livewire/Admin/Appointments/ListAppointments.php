@@ -59,6 +59,14 @@ class ListAppointments extends AdminComponent
         $this->dispatchBrowserEvent('show-delete-confirmation');
     }
 
+    public function changeStatus($appointment_id)
+    {
+        $appointment = Appointment::findOrFail($appointment_id);
+        $appointment->status = $appointment->status == 'SCHEDULED' ? 'CLOSED' : 'SCHEDULED';
+        $appointment->save();
+        $this->dispatchBrowserEvent('updated', ['message' => 'Appointments status changed.']);
+    }
+
     public function filter_by_status($status = null)
     {
         $this->resetPage();
@@ -97,11 +105,6 @@ class ListAppointments extends AdminComponent
             })
             ->orderBy('order_position', 'asc')
             ->paginate(5);
-    }
-
-    public function mount()
-    {
-        $this->getAppointmentsProperty();
     }
 
     public function render()
